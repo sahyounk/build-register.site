@@ -507,8 +507,24 @@ textarea:focus {
   .verify-box {
     flex-direction: column;
   }
+.table-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: rgba(43, 104, 246, 0.1);
+  color: var(--primary-2);
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
 
-  .stats-grid {
+ .table-link:hover {
+  background: rgba(43, 104, 246, 0.16);
+ }
+ .stats-grid {
     grid-template-columns: 1fr;
   }
 }
