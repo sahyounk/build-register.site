@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build-Register | Construction Warranty Registry</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#08111F',
+            panel: '#0D1828',
+            panelSoft: '#101E31',
+            line: 'rgba(255,255,255,0.08)',
+            lineStrong: 'rgba(255,255,255,0.16)',
+            textSoft: '#9FB0C8',
+            brand: '#3B82F6',
+            brand2: '#60A5FA',
+            mint: '#67E8F9'
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(96,165,250,0.12), 0 20px 60px rgba(19,66,140,0.35)',
+            soft: '0 10px 30px rgba(0,0,0,0.25)'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Manrope', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.22), transparent 28%),
+        radial-gradient(circle at 85% 18%, rgba(103,232,249,0.08), transparent 20%),
+        linear-gradient(180deg, #08111F 0%, #091321 40%, #060C16 100%);
+      color: #ECF3FF;
+    }
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.9), transparent 95%);
+    }
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo-mark {
+      filter: drop-shadow(0 10px 24px rgba(59,130,246,0.28));
+    }
+  </style>
+</head>
+<body class="font-sans overflow-x-hidden">
+  <div class="fixed inset-0 grid-pattern pointer-events-none opacity-50"></div>
+
+  <header class="sticky top-0 z-50 border-b border-line bg-ink/70 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-4">
+        <svg class="logo-mark w-14 h-14" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Build-Register logo">
+          <defs>
+            <linearGradient id="g1" x1="8" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#67E8F9"/>
+              <stop offset="0.45" stop-color="#60A5FA"/>
+              <stop offset="1" stop-color="#2563EB"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 17.5 31.5 8 52 17.5v18.2c0 8.4-4.6 15.1-20.5 20.3C15.6 50.8 12 44.1 12 35.7V17.5Z" fill="url(#g1)" fill-opacity="0.16" stroke="url(#g1)" stroke-width="2"/>
+          <path d="M21 23.5 32 18l11 5.5V31H21v-7.5Z" fill="url(#g1)"/>
+          <path d="M18 36.5 28.2 46 46 28.5" stroke="url(#g1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="8" y="23" width="7" height="26" rx="2" fill="#2563EB" fill-opacity="0.95"/>
+          <rect x="49" y="23" width="7" height="26" rx="2" fill="#60A5FA" fill-opacity="0.95"/>
+        </svg>
+        <div>
+          <div class="font-display text-2xl md:text-3xl font-extrabold tracking-tight leading-none">
+            Build<span class="text-brand2">-Register</span>
+          </div>
+          <div class="text-[11px] md:text-xs uppercase tracking-[0.24em] text-textSoft mt-1">Construction Warranty Registry</div>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-8 text-sm text-textSoft">
+        <a href="#why" class="hover:text-white transition">Why it matters</a>
+        <a href="#features" class="hover:text-white transition">Platform</a>
+        <a href="#workflow" class="hover:text-white transition">Workflow</a>
+        <a href="#cta" class="hover:text-white transition">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="#features" class="hidden sm:inline-flex px-4 py-2 text-sm text-white/90 border border-lineStrong rounded-xl hover:bg-white/5 transition">View platform</a>
+        <a href="#cta" class="inline-flex px-4 py-2 text-sm font-semibold rounded-xl bg-gradient-to-r from-brand to-brand2 text-white shadow-glow hover:opacity-95 transition">Request demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-16 lg:pt-24 lg:pb-24">
+        <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lineStrong glass text-xs uppercase tracking-[0.22em] text-textSoft mb-6">
+              Trusted infrastructure for construction records
+            </div>
+            <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.95] max-w-4xl">
+              One registry for warranties,
+              <span class="text-brand2">compliance</span> and project truth.
+            </h1>
+            <p class="mt-6 text-lg md:text-xl text-textSoft max-w-3xl leading-relaxed">
+              Build-Register gives developers, contractors, consultants and owners a single source of truth for construction documentation — from handover packs and warranties to permits, inspections and immutable audit trails.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-4">
+              <a href="#cta" class="inline-flex items-center justify-center px-6 py-4 rounded-2xl bg-gradient-to-r from-brand to-brand2 text-white font-semibold shadow-glow">Book a walkthrough</a>
+              <a href="#features" class="inline-flex items-center justify-center px-6 py-4 rounded-2xl border border-lineStrong text-white/90 hover:bg-white/5 transition">Explore the platform</a>
+            </div>
+
+            <div class="mt-10 grid sm:grid-cols-3 gap-4 max-w-3xl">
+              <div class="glass rounded-2xl p-4 shadow-soft">
+                <div class="text-2xl font-display font-extrabold">Immutable</div>
+                <div class="text-sm text-textSoft mt-1">Every critical document can be fingerprinted and preserved.</div>
+              </div>
+              <div class="glass rounded-2xl p-4 shadow-soft">
+                <div class="text-2xl font-display font-extrabold">Traceable</div>
+                <div class="text-sm text-textSoft mt-1">Ownership, revisions and approvals stay visible across the asset lifecycle.</div>
+              </div>
+              <div class="glass rounded-2xl p-4 shadow-soft">
+                <div class="text-2xl font-display font-extrabold">Bankable</div>
+                <div class="text-sm text-textSoft mt-1">Clear records strengthen diligence, claims handling and future financing.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -inset-6 bg-gradient-to-br from-brand/20 via-transparent to-mint/10 blur-3xl"></div>
+            <div class="relative glass rounded-[28px] p-5 shadow-glow">
+              <div class="rounded-[22px] border border-line overflow-hidden bg-panel">
+                <div class="px-5 py-4 border-b border-line flex items-center justify-between">
+                  <div>
+                    <div class="text-xs uppercase tracking-[0.2em] text-textSoft">Live registry view</div>
+                    <div class="font-display text-2xl font-bold mt-1">Project Warranty Vault</div>
+                  </div>
+                  <div class="px-3 py-2 rounded-xl bg-brand/10 border border-brand/20 text-brand2 text-sm font-medium">Verified</div>
+                </div>
+
+                <div class="p-5 space-y-4 bg-gradient-to-b from-panel to-panelSoft">
+                  <div class="grid grid-cols-3 gap-3">
+                    <div class="rounded-2xl bg-white/[0.04] border border-line p-4">
+                      <div class="text-xs text-textSoft uppercase tracking-widest">Projects</div>
+                      <div class="mt-2 text-2xl font-display font-extrabold">124</div>
+                    </div>
+                    <div class="rounded-2xl bg-white/[0.04] border border-line p-4">
+                      <div class="text-xs text-textSoft uppercase tracking-widest">Warranties</div>
+                      <div class="mt-2 text-2xl font-display font-extrabold">2,486</div>
+                    </div>
+                    <div class="rounded-2xl bg-white/[0.04] border border-line p-4">
+                      <div class="text-xs text-textSoft uppercase tracking-widest">Claims</div>
+                      <div class="mt-2 text-2xl font-display font-extrabold">18</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl bg-ink/50 border border-line p-4">
+                    <div class="flex items-center justify-between gap-4">
+                      <div>
+                        <div class="font-semibold">Tower B — Waterproofing Warranty</div>
+                        <div class="text-sm text-textSoft mt-1">Issued by Gulf Build Systems · Valid until 16 Mar 2036</div>
+                      </div>
+                      <div class="text-right">
+                        <div class="text-xs uppercase tracking-widest text-textSoft">Hash</div>
+                        <div class="text-sm text-brand2 font-medium">0x3a8f...a2c9</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl bg-ink/50 border border-line p-4">
+                    <div class="flex items-center justify-between gap-4">
+                      <div>
+                        <div class="font-semibold">Mechanical Commissioning Pack</div>
+                        <div class="text-sm text-textSoft mt-1">Approved by consultant · Revision 4 anchored</div>
+                      </div>
+                      <div class="px-3 py-1.5 rounded-full bg-mint/10 border border-mint/20 text-mint text-xs uppercase tracking-wider">Anchored</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl bg-ink/50 border border-line p-4">
+                    <div class="text-xs uppercase tracking-widest text-textSoft mb-3">Recent activity</div>
+                    <div class="space-y-3 text-sm">
+                      <div class="flex justify-between gap-4"><span>Snagging report uploaded</span><span class="text-textSoft">2m ago</span></div>
+                      <div class="flex justify-between gap-4"><span>Warranty clause verified</span><span class="text-textSoft">18m ago</span></div>
+                      <div class="flex justify-between gap-4"><span>Contractor certificate signed</span><span class="text-textSoft">1h ago</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="py-10 lg:py-16">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="glass rounded-[28px] p-8 shadow-soft">
+            <div class="text-sm uppercase tracking-[0.2em] text-brand2">The problem</div>
+            <h2 class="font-display text-3xl md:text-4xl font-extrabold mt-3">Construction records break when teams, documents and responsibilities fragment.</h2>
+            <p class="text-textSoft mt-4 leading-relaxed">Warranties get buried in email. Certificates sit in PDFs no one can find. Handover packs are incomplete. Claims become painful because evidence is missing, late or disputed.</p>
+          </div>
+          <div class="glass rounded-[28px] p-8 shadow-soft border-brand/15">
+            <div class="text-sm uppercase tracking-[0.2em] text-brand2">The answer</div>
+            <h2 class="font-display text-3xl md:text-4xl font-extrabold mt-3">Build-Register turns every project into a durable digital record.</h2>
+            <p class="text-textSoft mt-4 leading-relaxed">Create a structured source of truth for every asset and every project. Store the right files, anchor the critical ones, prove chain of custody and improve confidence for owners, operators, insurers and future buyers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="py-10 lg:py-16">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <div class="text-sm uppercase tracking-[0.2em] text-brand2">Platform capabilities</div>
+          <h2 class="font-display text-4xl md:text-5xl font-extrabold mt-3">Built for the people who need proof, not just storage.</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+          <div class="glass rounded-[24px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand2 text-xl font-bold">01</div>
+            <h3 class="font-display text-xl font-bold mt-5">Project vaults</h3>
+            <p class="text-textSoft mt-3 text-sm leading-relaxed">Dedicated repositories for each project, phase, unit or asset with role-based structure.</p>
+          </div>
+          <div class="glass rounded-[24px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand2 text-xl font-bold">02</div>
+            <h3 class="font-display text-xl font-bold mt-5">Warranty register</h3>
+            <p class="text-textSoft mt-3 text-sm leading-relaxed">Track issuer, coverage, validity dates, exclusions and linked evidence in one view.</p>
+          </div>
+          <div class="glass rounded-[24px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand2 text-xl font-bold">03</div>
+            <h3 class="font-display text-xl font-bold mt-5">Audit trail</h3>
+            <p class="text-textSoft mt-3 text-sm leading-relaxed">Record uploads, approvals, signoffs and amendments so responsibility stays visible.</p>
+          </div>
+          <div class="glass rounded-[24px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand2 text-xl font-bold">04</div>
+            <h3 class="font-display text-xl font-bold mt-5">Claims readiness</h3>
+            <p class="text-textSoft mt-3 text-sm leading-relaxed">Surface the right files faster when defects, disputes or maintenance claims appear.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" class="py-10 lg:py-16">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="glass rounded-[30px] p-8 lg:p-10">
+          <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
+            <div>
+              <div class="text-sm uppercase tracking-[0.2em] text-brand2">Workflow</div>
+              <h2 class="font-display text-4xl md:text-5xl font-extrabold mt-3">Simple enough for handover teams. Strong enough for institutional records.</h2>
+              <p class="text-textSoft mt-4 leading-relaxed">The landing experience should make the product feel clear, disciplined and enterprise-ready from the first scroll.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="rounded-2xl border border-line p-5 bg-white/[0.03]">
+                <div class="text-brand2 font-display text-2xl font-extrabold">1</div>
+                <h3 class="font-semibold text-lg mt-2">Upload</h3>
+                <p class="text-sm text-textSoft mt-2">Bring permits, certifications, drawings, manuals and warranties into structured folders.</p>
+              </div>
+              <div class="rounded-2xl border border-line p-5 bg-white/[0.03]">
+                <div class="text-brand2 font-display text-2xl font-extrabold">2</div>
+                <h3 class="font-semibold text-lg mt-2">Verify</h3>
+                <p class="text-sm text-textSoft mt-2">Tag critical records, assign issuers and validate dates, coverage and responsible parties.</p>
+              </div>
+              <div class="rounded-2xl border border-line p-5 bg-white/[0.03]">
+                <div class="text-brand2 font-display text-2xl font-extrabold">3</div>
+                <h3 class="font-semibold text-lg mt-2">Anchor</h3>
+                <p class="text-sm text-textSoft mt-2">Fingerprint key files and preserve a tamper-evident record for later proof and diligence.</p>
+              </div>
+              <div class="rounded-2xl border border-line p-5 bg-white/[0.03]">
+                <div class="text-brand2 font-display text-2xl font-extrabold">4</div>
+                <h3 class="font-semibold text-lg mt-2">Operate</h3>
+                <p class="text-sm text-textSoft mt-2">Search instantly, monitor expiries and respond to claims with complete project context.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cta" class="py-14 lg:py-20">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="glass rounded-[32px] p-8 lg:p-12 text-center shadow-glow">
+          <div class="text-sm uppercase tracking-[0.2em] text-brand2">Next step</div>
+          <h2 class="font-display text-4xl md:text-5xl font-extrabold mt-3">Bring order, proof and permanence to your project records.</h2>
+          <p class="max-w-2xl mx-auto text-textSoft mt-5 text-lg leading-relaxed">Use Build-Register as the front door to a more trustworthy construction documentation workflow.</p>
+          <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+            <a href="mailto:hello@build-register.com" class="inline-flex items-center justify-center px-6 py-4 rounded-2xl bg-gradient-to-r from-brand to-brand2 text-white font-semibold">hello@build-register.com</a>
+            <a href="https://build-register.com" class="inline-flex items-center justify-center px-6 py-4 rounded-2xl border border-lineStrong text-white/90 hover:bg-white/5 transition">build-register.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

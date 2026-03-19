@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build-Register App | Document Vault</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#08111F', panel: '#0D1828', panelSoft: '#101E31', line: 'rgba(255,255,255,0.08)', lineStrong: 'rgba(255,255,255,0.16)', textSoft: '#9FB0C8', brand: '#3B82F6', brand2: '#60A5FA', mint: '#67E8F9'
+          },
+          boxShadow: { glow: '0 0 0 1px rgba(96,165,250,0.12), 0 20px 60px rgba(19,66,140,0.35)', soft: '0 10px 30px rgba(0,0,0,0.25)' },
+          fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Manrope', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.18), transparent 28%), linear-gradient(180deg, #08111F 0%, #091321 40%, #060C16 100%);
+      color: #ECF3FF;
+    }
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.08); }
+  </style>
+</head>
+<body class="font-sans min-h-screen">
+  <header class="sticky top-0 z-50 border-b border-line bg-ink/70 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-4">
+        <img src="/assets/logo-build-register.svg" alt="Build-Register logo" class="w-14 h-14" />
+        <div>
+          <div class="font-display text-2xl font-extrabold tracking-tight leading-none">Build<span class="text-brand2">-Register</span></div>
+          <div class="text-[11px] uppercase tracking-[0.24em] text-textSoft mt-1">App Preview</div>
+        </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-textSoft">
+        <a href="/" class="hover:text-white transition">Landing page</a>
+        <a href="#vault" class="hover:text-white transition">Vault</a>
+        <a href="#projects" class="hover:text-white transition">Projects</a>
+      </nav>
+      <a href="mailto:info@build-register.com" class="inline-flex px-4 py-2 text-sm font-semibold rounded-xl bg-gradient-to-r from-brand to-brand2 text-white shadow-glow">Request demo</a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+    <section class="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 mb-8">
+      <div class="glass rounded-[28px] p-8 shadow-soft">
+        <div class="text-xs uppercase tracking-[0.2em] text-textSoft">Document Vault</div>
+        <h1 class="font-display text-4xl md:text-5xl font-extrabold mt-3">Construction records, warranties and approvals in one place.</h1>
+        <p class="mt-4 text-textSoft max-w-2xl">This is a static product preview you can show investors and prospects while the full application is being built. It demonstrates the information architecture, look and feel, and the core registry experience.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <button class="px-5 py-3 rounded-2xl bg-gradient-to-r from-brand to-brand2 text-white font-semibold">Upload document</button>
+          <button class="px-5 py-3 rounded-2xl border border-lineStrong text-white/90">Open project</button>
+        </div>
+      </div>
+      <div class="glass rounded-[28px] p-6 shadow-soft">
+        <div class="grid grid-cols-3 gap-3">
+          <div class="rounded-2xl bg-white/[0.04] border border-line p-4"><div class="text-xs text-textSoft uppercase tracking-widest">Projects</div><div class="mt-2 text-2xl font-display font-extrabold">124</div></div>
+          <div class="rounded-2xl bg-white/[0.04] border border-line p-4"><div class="text-xs text-textSoft uppercase tracking-widest">Warranties</div><div class="mt-2 text-2xl font-display font-extrabold">2,486</div></div>
+          <div class="rounded-2xl bg-white/[0.04] border border-line p-4"><div class="text-xs text-textSoft uppercase tracking-widest">Claims</div><div class="mt-2 text-2xl font-display font-extrabold">18</div></div>
+        </div>
+        <div class="mt-4 rounded-2xl bg-ink/50 border border-line p-4">
+          <div class="text-xs uppercase tracking-widest text-textSoft mb-2">Latest verification</div>
+          <div class="font-semibold">Tower B — Waterproofing Warranty</div>
+          <div class="text-sm text-textSoft mt-1">Issuer: Gulf Build Systems · Valid until 16 Mar 2036</div>
+          <div class="text-sm text-brand2 font-medium mt-2">Hash: 0x3a8f...a2c9</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vault" class="glass rounded-[28px] p-6 shadow-soft mb-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+        <div>
+          <div class="text-sm uppercase tracking-[0.2em] text-brand2">Vault preview</div>
+          <h2 class="font-display text-3xl font-extrabold mt-2">Recent registry entries</h2>
+        </div>
+        <div class="flex gap-3">
+          <input class="bg-white/[0.04] border border-line rounded-xl px-4 py-3 text-sm w-72 max-w-full" placeholder="Search by document, hash or project" />
+          <button class="px-4 py-3 rounded-xl border border-lineStrong text-white/90">Filter</button>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <div class="rounded-2xl bg-white/[0.04] border border-line p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="font-semibold text-lg">Structural_Load_Permit_Phase1.pdf</div>
+            <div class="text-sm text-textSoft mt-1">Verified permit · 4.2 MB · Modified Oct 12, 2023</div>
+            <div class="text-xs text-brand2 mt-2 font-medium">HASH: 0x4f2b...8e1a</div>
+          </div>
+          <span class="px-3 py-1.5 rounded-full bg-mint/10 border border-mint/20 text-mint text-xs uppercase tracking-wider">Anchored</span>
+        </div>
+        <div class="rounded-2xl bg-white/[0.04] border border-line p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="font-semibold text-lg">HVAC_System_Blueprints_v4.dwg</div>
+            <div class="text-sm text-textSoft mt-1">Design package · 28.5 MB · Modified Sep 28, 2023</div>
+            <div class="text-xs text-brand2 mt-2 font-medium">HASH: 0x9a1c...f0d4</div>
+          </div>
+          <span class="px-3 py-1.5 rounded-full bg-white/5 border border-line text-textSoft text-xs uppercase tracking-wider">Internal</span>
+        </div>
+        <div class="rounded-2xl bg-white/[0.04] border border-line p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="font-semibold text-lg">Mechanical Commissioning Pack</div>
+            <div class="text-sm text-textSoft mt-1">Consultant approved · Revision 4 · Full handover evidence</div>
+            <div class="text-xs text-brand2 mt-2 font-medium">HASH: 0x72bb...b99a</div>
+          </div>
+          <span class="px-3 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand2 text-xs uppercase tracking-wider">Verified</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="grid md:grid-cols-3 gap-5">
+      <div class="glass rounded-[24px] p-6"><div class="text-sm uppercase tracking-[0.2em] text-brand2">Project</div><h3 class="font-display text-2xl font-bold mt-2">Marina Residences</h3><p class="text-textSoft mt-3 text-sm">56 units · 112 warranties · 8 claims · 94% documentation completeness</p></div>
+      <div class="glass rounded-[24px] p-6"><div class="text-sm uppercase tracking-[0.2em] text-brand2">Project</div><h3 class="font-display text-2xl font-bold mt-2">Office Park East</h3><p class="text-textSoft mt-3 text-sm">3 towers · 268 warranties · 2 live claims · consultant approvals in progress</p></div>
+      <div class="glass rounded-[24px] p-6"><div class="text-sm uppercase tracking-[0.2em] text-brand2">Project</div><h3 class="font-display text-2xl font-bold mt-2">Industrial Block C</h3><p class="text-textSoft mt-3 text-sm">21 assets · 49 warranties · no active claims · all critical documents anchored</p></div>
+    </section>
+  </main>
+</body>
+</html>
