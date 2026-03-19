@@ -3,502 +3,583 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Register | Warranty Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Build Register | Construction Warranty Registry</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #f3f6fb;
+      --panel: #ffffff;
+      --text: #162033;
+      --muted: #667085;
+      --border: #dbe3ef;
+      --primary: #173b8f;
+      --primary-2: #2b68f6;
+      --shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: #fff;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .shell {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(43,104,246,0.12), transparent 26%),
+        linear-gradient(180deg, #0b1020 0%, #11182e 100%);
+      color: white;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .brand-mark svg {
+      width: 28px;
+      height: 28px;
+      stroke: #8db4ff;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .brand-subtitle {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn, .btn-secondary {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      color: white;
+      box-shadow: 0 10px 24px rgba(43, 104, 246, 0.25);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+      padding: 46px 0 72px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #dbe7ff;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.03;
+      margin: 0 0 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0 0 28px;
+      color: rgba(255,255,255,0.78);
+      font-size: 1.08rem;
+      max-width: 720px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .hero-metrics {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.82);
+      font-size: 0.95rem;
+    }
+
+    .metric strong {
+      display: block;
+      color: white;
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .hero-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: rgba(255,255,255,0.74);
+      font-size: 0.94rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .pill.valid {
+      background: rgba(34,197,94,0.16);
+      color: #c7f9d8;
+    }
+
+    .hero-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-item {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .hero-item-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .hero-item-meta {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.88rem;
+    }
+
+    .section {
+      padding: 72px 0;
+      background: var(--bg-soft);
+    }
+
+    .section.white {
+      background: white;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 34px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .showcase-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .showcase-panel h3 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .showcase-panel ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .cta {
+      padding: 72px 0 84px;
+      background: white;
+    }
+
+    .cta-box {
+      border-radius: 28px;
+      padding: 34px;
+      background: linear-gradient(135deg, #0f1730 0%, #16264f 100%);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .cta-box h2 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+    }
+
+    .cta-box p {
+      margin: 0;
+      color: rgba(255,255,255,0.78);
+      max-width: 700px;
+    }
+
+    .footer {
+      padding: 24px 0 36px;
+      background: white;
+      color: var(--muted);
+      font-size: 0.92rem;
+      border-top: 1px solid #edf2f7;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .showcase,
+      .cta-box {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: 18px;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .hero-actions,
+      .nav-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn,
+      .btn-secondary {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <rect x="3" y="3" width="22" height="22" rx="6" />
-            <path d="M9 18L13 14L16 17L20 11" />
-          </svg>
+  <div class="shell">
+    <div class="container">
+      <header class="nav">
+        <div class="brand">
+          <div class="brand-mark">
+            <svg viewBox="0 0 28 28" aria-hidden="true">
+              <rect x="3" y="3" width="22" height="22" rx="6"></rect>
+              <path d="M9 18L13 14L16 17L20 11"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-title">Build Register</div>
+            <div class="brand-subtitle">Construction Warranty Registry</div>
+          </div>
         </div>
-        <div>
-          <div class="brand-title">Build Register</div>
-          <div class="brand-subtitle">Warranty Dashboard</div>
-        </div>
-      </div>
 
-      <nav class="nav">
-        <button class="nav-item active" data-view="dashboard">Dashboard</button>
-        <button class="nav-item" data-view="properties">Properties</button>
-        <button class="nav-item" data-view="warranties">Warranties</button>
-        <button class="nav-item" data-view="claims">Claims</button>
-        <button class="nav-item" data-view="verify">Verification</button>
-      </nav>
+        <nav class="nav-links">
+          <a href="#platform">Platform</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#why">Why it matters</a>
+        </nav>
 
-      <div class="sidebar-footer">
-        <div class="small-label">Environment</div>
-        <div class="env-badge">Pilot / Demo</div>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <div>
-          <h1 id="pageTitle">Dashboard</h1>
-          <p id="pageSubtitle">Construction warranty oversight for developers, owners, and operators.</p>
-        </div>
-        <div class="topbar-actions">
-          <a class="ghost-btn" href="/">Back to Site</a>
-          <button class="primary-btn" id="quickRegisterBtn">Register Property</button>
+        <div class="nav-actions">
+          <a class="btn-secondary" href="/app">Open Dashboard</a>
         </div>
       </header>
 
-      <section id="dashboardView" class="view active">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-label">Registered Properties</div>
-            <div class="stat-value">24</div>
-            <div class="stat-meta">3 added this month</div>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Built for developers, owners, contractors, and operators</div>
+          <h1>Construction warranties, claims, and verification — in one trusted registry.</h1>
+          <p>
+            Build Register gives property stakeholders a clean operational layer for registering assets,
+            issuing warranty certificates, tracking claims, and verifying coverage with a tamper-evident audit trail.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="/app">Launch App</a>
+            <a class="btn-secondary" href="/app">View Demo Workflow</a>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Active Warranties</div>
-            <div class="stat-value">118</div>
-            <div class="stat-meta">94% in good standing</div>
+
+          <div class="hero-metrics">
+            <div class="metric">
+              <strong>24</strong>
+              Registered properties
+            </div>
+            <div class="metric">
+              <strong>118</strong>
+              Active warranties
+            </div>
+            <div class="metric">
+              <strong>4</strong>
+              Open claims
+            </div>
           </div>
-          <div class="stat-card alert">
-            <div class="stat-label">Expiring in 90 Days</div>
-            <div class="stat-value">9</div>
-            <div class="stat-meta">Action recommended</div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <div>
+              <h3>Palm Jumeirah Villa 27</h3>
+              <p>Featured pilot record</p>
+            </div>
+            <span class="pill valid">Valid</span>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Open Claims</div>
-            <div class="stat-value">4</div>
-            <div class="stat-meta">2 under review</div>
+
+          <div class="hero-list">
+            <div class="hero-item">
+              <div>
+                <div class="hero-item-title">Structural Warranty</div>
+                <div class="hero-item-meta">10-year coverage • BR-2026-000127</div>
+              </div>
+              <span class="pill valid">Active</span>
+            </div>
+
+            <div class="hero-item">
+              <div>
+                <div class="hero-item-title">Waterproofing</div>
+                <div class="hero-item-meta">5-year coverage • Claim-ready record</div>
+              </div>
+              <span class="pill valid">Active</span>
+            </div>
+
+            <div class="hero-item">
+              <div>
+                <div class="hero-item-title">HVAC</div>
+                <div class="hero-item-meta">Expiring soon • Review recommended</div>
+              </div>
+              <span class="pill" style="background: rgba(245,158,11,0.18); color:#ffe1a8;">Review</span>
+            </div>
           </div>
         </div>
-
-        <div class="content-grid two-col">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Featured Property</h2>
-                <p>Pilot asset with live warranty history</p>
-              </div>
-              <span class="status-pill success">Active</span>
-            </div>
-
-            <div class="property-hero">
-              <div>
-                <div class="property-name">Palm Jumeirah Villa 27</div>
-                <div class="property-meta">Developer: Marina Horizon Developments</div>
-                <div class="property-meta">Main Contractor: Gulf Structure Contracting</div>
-                <div class="property-meta">Completion Date: 12 Jan 2026</div>
-                <div class="property-meta">Verification ID: BR-2026-000127</div>
-              </div>
-              <div class="audit-box">
-                <div class="small-label">Verified Record</div>
-                <div class="audit-id">BR-2026-000127</div>
-                <div class="audit-note">Tamper-evident audit trail recorded</div>
-              </div>
-            </div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Warranty Snapshot</h2>
-                <p>Coverage by category</p>
-              </div>
-            </div>
-
-            <div class="coverage-list">
-              <div class="coverage-item">
-                <div>
-                  <strong>Structural</strong>
-                  <div class="muted">10-year coverage</div>
-                </div>
-                <span class="status-pill success">Valid</span>
-              </div>
-              <div class="coverage-item">
-                <div>
-                  <strong>Waterproofing</strong>
-                  <div class="muted">5-year coverage</div>
-                </div>
-                <span class="status-pill success">Valid</span>
-              </div>
-              <div class="coverage-item">
-                <div>
-                  <strong>HVAC</strong>
-                  <div class="muted">2-year coverage</div>
-                </div>
-                <span class="status-pill warning">Expiring Soon</span>
-              </div>
-              <div class="coverage-item">
-                <div>
-                  <strong>Electrical</strong>
-                  <div class="muted">3-year coverage</div>
-                </div>
-                <span class="status-pill success">Valid</span>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div class="content-grid two-col">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Recent Claims</h2>
-                <p>Latest claim activity</p>
-              </div>
-            </div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Claim ID</th>
-                  <th>Property</th>
-                  <th>Category</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>CL-1042</td>
-                  <td>Palm Jumeirah Villa 27</td>
-                  <td>Waterproofing</td>
-                  <td><span class="status-pill review">Under Review</span></td>
-                </tr>
-                <tr>
-                  <td>CL-1039</td>
-                  <td>Dubai Hills Residence B12</td>
-                  <td>HVAC</td>
-                  <td><span class="status-pill success">Approved</span></td>
-                </tr>
-                <tr>
-                  <td>CL-1033</td>
-                  <td>Marina Tower 8</td>
-                  <td>Electrical</td>
-                  <td><span class="status-pill neutral">Submitted</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Operational Priorities</h2>
-                <p>Recommended next actions</p>
-              </div>
-            </div>
-            <ul class="priority-list">
-              <li>Review 2 expiring HVAC warranties for renewal planning.</li>
-              <li>Resolve supporting documentation for claim CL-1042.</li>
-              <li>Register final handover documents for Marina Tower 8.</li>
-              <li>Verify contractor completion certificate for Villa 27.</li>
-            </ul>
-          </section>
-        </div>
       </section>
-
-      <section id="propertiesView" class="view">
-        <div class="content-grid two-col">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Register Property</h2>
-                <p>Create a new project or asset record</p>
-              </div>
-            </div>
-
-            <form class="form-grid" id="propertyForm">
-              <label>
-                <span>Property / Project Name</span>
-                <input type="text" id="projectName" placeholder="Palm Jumeirah Villa 27" />
-              </label>
-              <label>
-                <span>Asset / Unit ID</span>
-                <input type="text" id="assetId" placeholder="PJ-V27" />
-              </label>
-              <label>
-                <span>Owner / Developer</span>
-                <input type="text" id="developer" placeholder="Marina Horizon Developments" />
-              </label>
-              <label>
-                <span>Main Contractor</span>
-                <input type="text" id="contractor" placeholder="Gulf Structure Contracting" />
-              </label>
-              <label>
-                <span>Completion Date</span>
-                <input type="date" id="completionDate" />
-              </label>
-              <label>
-                <span>Document Reference</span>
-                <input type="text" id="docRef" placeholder="Handover Pack / Completion Certificate" />
-              </label>
-              <div class="form-actions full">
-                <button type="submit" class="primary-btn">Register Property</button>
-              </div>
-            </form>
-
-            <div id="propertyFormResult" class="inline-message hidden"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Property Register</h2>
-                <p>Current tracked assets</p>
-              </div>
-            </div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Property</th>
-                  <th>Developer</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Palm Jumeirah Villa 27</td>
-                  <td>Marina Horizon Developments</td>
-                  <td><span class="status-pill success">Active</span></td>
-                </tr>
-                <tr>
-                  <td>Dubai Hills Residence B12</td>
-                  <td>Vista Living</td>
-                  <td><span class="status-pill success">Active</span></td>
-                </tr>
-                <tr>
-                  <td>Marina Tower 8</td>
-                  <td>Blue Coast Projects</td>
-                  <td><span class="status-pill neutral">Onboarding</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </div>
-      </section>
-
-      <section id="warrantiesView" class="view">
-        <div class="content-grid two-col">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Issue Warranty Certificate</h2>
-                <p>Create a new warranty record for a registered asset</p>
-              </div>
-            </div>
-
-            <form class="form-grid" id="warrantyForm">
-              <label>
-                <span>Property</span>
-                <input type="text" id="wProperty" placeholder="Palm Jumeirah Villa 27" />
-              </label>
-              <label>
-                <span>Warranty Type</span>
-                <select id="wType">
-                  <option>Structural</option>
-                  <option>Waterproofing</option>
-                  <option>HVAC</option>
-                  <option>Electrical</option>
-                  <option>Finishing / Fit-out</option>
-                </select>
-              </label>
-              <label>
-                <span>Responsible Party</span>
-                <input type="text" id="wParty" placeholder="Gulf Structure Contracting" />
-              </label>
-              <label>
-                <span>Coverage Period (years)</span>
-                <input type="number" id="wYears" placeholder="10" min="1" />
-              </label>
-              <label>
-                <span>Start Date</span>
-                <input type="date" id="wStart" />
-              </label>
-              <label>
-                <span>Certificate Reference</span>
-                <input type="text" id="wCert" placeholder="W-STR-2026-127" />
-              </label>
-              <div class="form-actions full">
-                <button type="submit" class="primary-btn">Issue Warranty</button>
-              </div>
-            </form>
-
-            <div id="warrantyFormResult" class="inline-message hidden"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Active Warranties</h2>
-                <p>Current coverage records</p>
-              </div>
-            </div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Type</th>
-                  <th>Property</th>
-                  <th>Expiry</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>BR-2026-000127</td>
-                  <td>Structural</td>
-                  <td>Palm Jumeirah Villa 27</td>
-                  <td>12 Jan 2036</td>
-                  <td><span class="status-pill success">Valid</span></td>
-                </tr>
-                <tr>
-                  <td>BR-2026-000128</td>
-                  <td>Waterproofing</td>
-                  <td>Palm Jumeirah Villa 27</td>
-                  <td>12 Jan 2031</td>
-                  <td><span class="status-pill success">Valid</span></td>
-                </tr>
-                <tr>
-                  <td>BR-2024-000992</td>
-                  <td>HVAC</td>
-                  <td>Dubai Hills Residence B12</td>
-                  <td>20 Apr 2026</td>
-                  <td><span class="status-pill warning">Expiring Soon</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </div>
-      </section>
-
-      <section id="claimsView" class="view">
-        <div class="content-grid two-col">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>File Claim</h2>
-                <p>Submit a warranty issue for review</p>
-              </div>
-            </div>
-
-            <form class="form-grid" id="claimForm">
-              <label>
-                <span>Warranty ID</span>
-                <input type="text" id="claimWarrantyId" placeholder="BR-2026-000127" />
-              </label>
-              <label>
-                <span>Claim Category</span>
-                <select id="claimCategory">
-                  <option>Structural</option>
-                  <option>Waterproofing</option>
-                  <option>HVAC</option>
-                  <option>Electrical</option>
-                  <option>Finishing / Fit-out</option>
-                </select>
-              </label>
-              <label class="full">
-                <span>Description</span>
-                <textarea id="claimDescription" rows="5" placeholder="Describe the issue, impacted area, and date observed."></textarea>
-              </label>
-              <label>
-                <span>Severity</span>
-                <select id="claimSeverity">
-                  <option>Low</option>
-                  <option>Medium</option>
-                  <option>High</option>
-                  <option>Critical</option>
-                </select>
-              </label>
-              <label>
-                <span>Supporting Reference</span>
-                <input type="text" id="claimRef" placeholder="Photo set / inspection report / ticket number" />
-              </label>
-              <div class="form-actions full">
-                <button type="submit" class="primary-btn">Submit Claim</button>
-              </div>
-            </form>
-
-            <div id="claimFormResult" class="inline-message hidden"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Claim Register</h2>
-                <p>Recent warranty events</p>
-              </div>
-            </div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Claim ID</th>
-                  <th>Warranty ID</th>
-                  <th>Severity</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>CL-1042</td>
-                  <td>BR-2026-000128</td>
-                  <td>Medium</td>
-                  <td><span class="status-pill review">Under Review</span></td>
-                </tr>
-                <tr>
-                  <td>CL-1039</td>
-                  <td>BR-2025-000771</td>
-                  <td>High</td>
-                  <td><span class="status-pill success">Approved</span></td>
-                </tr>
-                <tr>
-                  <td>CL-1033</td>
-                  <td>BR-2024-000992</td>
-                  <td>Low</td>
-                  <td><span class="status-pill neutral">Submitted</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </div>
-      </section>
-
-      <section id="verifyView" class="view">
-        <div class="content-grid two-col">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Verify Warranty Record</h2>
-                <p>Public-facing verification by certificate ID</p>
-              </div>
-            </div>
-
-            <form class="verify-box" id="verifyForm">
-              <input type="text" id="verifyInput" placeholder="Enter warranty ID, e.g. BR-2026-000127" />
-              <button type="submit" class="primary-btn">Verify Record</button>
-            </form>
-
-            <div id="verifyResult" class="verify-result hidden"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>What Verification Shows</h2>
-                <p>Business-readable proof of record status</p>
-              </div>
-            </div>
-            <ul class="priority-list">
-              <li>Certificate ID and asset association</li>
-              <li>Warranty type and coverage period</li>
-              <li>Current status: valid, expired, claimed, or disputed</li>
-              <li>Responsible party and recorded timestamp</li>
-              <li>Reference to a tamper-evident audit trail</li>
-            </ul>
-          </section>
-        </div>
-      </section>
-    </main>
+    </div>
   </div>
 
-  <script src="app.js"></script>
+  <section class="section white" id="platform">
+    <div class="container">
+      <div class="section-head">
+        <h2>A practical operating system for post-handover trust.</h2>
+        <p>
+          Replace scattered spreadsheets, emails, and disconnected PDFs with a single operational
+          view of warranty coverage, claim activity, and verification status.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Property Register</h3>
+          <p>Register assets, developers, contractors, completion dates, and handover references in one controlled record.</p>
+        </div>
+        <div class="card">
+          <h3>Warranty Certificates</h3>
+          <p>Track structural, waterproofing, HVAC, electrical, and fit-out cover with responsible parties and expiry windows.</p>
+        </div>
+        <div class="card">
+          <h3>Claim Oversight</h3>
+          <p>File, review, and monitor warranty issues with clear status history and supporting documentation references.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="workflow">
+    <div class="container">
+      <div class="section-head">
+        <h2>Simple workflow. Strong audit trail.</h2>
+        <p>
+          The product is designed to feel familiar to construction and real-estate stakeholders,
+          while the trust layer remains in the background.
+        </p>
+      </div>
+
+      <div class="showcase">
+        <div class="showcase-panel">
+          <h3>Operational flow</h3>
+          <ul>
+            <li>Register project or property</li>
+            <li>Issue warranty certificate by category</li>
+            <li>Track validity, expiry, and responsible parties</li>
+            <li>File claim with supporting references</li>
+            <li>Verify the record using a certificate ID</li>
+          </ul>
+        </div>
+
+        <div class="showcase-panel">
+          <h3>Why teams care</h3>
+          <ul>
+            <li>Cleaner handover and post-handover accountability</li>
+            <li>Less ambiguity around coverage periods</li>
+            <li>Faster claim handling and audit readiness</li>
+            <li>Higher trust for owners, operators, and insurers</li>
+            <li>Clearer proof of what was issued, by whom, and when</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="why">
+    <div class="container">
+      <div class="cta-box">
+        <div>
+          <h2>See the dashboard in action.</h2>
+          <p>
+            Open the demo environment to explore property registration, warranty issuance,
+            claims tracking, and record verification in a business-ready interface.
+          </p>
+        </div>
+        <div>
+          <a class="btn" href="/app">Launch App</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      Build Register © 2026 · Construction Warranty Registry
+    </div>
+  </footer>
 </body>
 </html>
