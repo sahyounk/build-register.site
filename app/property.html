@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Register | Property Detail</title>
+  <style>
+    :root {
+      --bg: #eef3f9;
+      --panel: #ffffff;
+      --panel-soft: #f7f9fc;
+      --text: #162033;
+      --muted: #6d7890;
+      --border: #dfe5ef;
+      --primary: #173b8f;
+      --primary-2: #2b68f6;
+      --success: #157347;
+      --warning: #b57600;
+      --review: #6f42c1;
+      --neutral: #64748b;
+      --shadow: 0 12px 30px rgba(16, 24, 40, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #0d1428 0%, #131d36 100%);
+      color: white;
+      padding: 26px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+    }
+
+    .brand-mark svg {
+      width: 28px;
+      height: 28px;
+      stroke: #8db4ff;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.68);
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav a {
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: rgba(255,255,255,0.82);
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .small-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .sidebar .small-label {
+      color: rgba(255,255,255,0.58);
+    }
+
+    .env-badge {
+      margin-top: 8px;
+      display: inline-flex;
+      padding: 8px 10px;
+      background: rgba(43, 104, 246, 0.18);
+      color: #dbe7ff;
+      border-radius: 999px;
+      font-size: 0.84rem;
+    }
+
+    .main {
+      padding: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .topbar h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+    }
+
+    .topbar p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+      font-weight: 600;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(43, 104, 246, 0.2);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .hero {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid #edf1f7;
+      margin-bottom: 20px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+    }
+
+    .property-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 18px;
+      margin-top: 16px;
+    }
+
+    .meta-item {
+      background: var(--panel-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .meta-item .label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .meta-item .value {
+      font-weight: 600;
+    }
+
+    .audit-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--panel-soft);
+      height: 100%;
+    }
+
+    .audit-id {
+      margin-top: 8px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .audit-note {
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid #edf1f7;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-header h2 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+    }
+
+    .panel-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .status-pill.success {
+      background: rgba(21, 115, 71, 0.12);
+      color: var(--success);
+    }
+
+    .status-pill.warning {
+      background: rgba(181, 118, 0, 0.12);
+      color: var(--warning);
+    }
+
+    .status-pill.review {
+      background: rgba(111, 66, 193, 0.12);
+      color: var(--review);
+    }
+
+    .status-pill.neutral {
+      background: rgba(100, 116, 139, 0.14);
+      color: var(--neutral);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th,
+    .data-table td {
+      text-align: left;
+      padding: 12px 8px;
+      border-bottom: 1px solid #eef2f7;
+      font-size: 0.94rem;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .timeline {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: #dbe5f3;
+    }
+
+    .timeline li {
+      position: relative;
+      padding-left: 38px;
+      padding-bottom: 22px;
+    }
+
+    .timeline li:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: #fff;
+      border: 2px solid var(--primary-2);
+      display: grid;
+      place-items: center;
+      color: var(--primary-2);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .timeline-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .timeline-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .docs-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .doc-item {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .doc-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .doc-meta {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .main {
+        padding: 18px;
+      }
+
+      .topbar {
+        flex-direction: column;
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 28 28" aria-hidden="true">
+            <rect x="3" y="3" width="22" height="22" rx="6"></rect>
+            <path d="M9 18L13 14L16 17L20 11"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">Build Register</div>
+          <div class="brand-subtitle">Property Detail</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="/app">Dashboard</a>
+        <a href="/app">Properties</a>
+        <a href="/app">Warranties</a>
+        <a href="/app">Claims</a>
+        <a href="/app" class="active">Property Record</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="small-label">Environment</div>
+        <div class="env-badge">Pilot / Demo</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Palm Jumeirah Villa 27</h1>
+          <p>
+            Detailed record for handover, warranty coverage, claim activity, and verification status.
+          </p>
+        </div>
+        <div class="actions">
+          <a class="btn-secondary" href="/app">Back to Dashboard</a>
+          <a class="btn" href="#">Download Certificate</a>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="property-title">Featured Pilot Asset</div>
+            <p style="margin:0; color: var(--muted); line-height:1.65;">
+              Single-property view for developers, operators, and insurers to understand exactly
+              what was issued, who is responsible, what remains covered, and what claims have occurred.
+            </p>
+
+            <div class="meta-grid">
+              <div class="meta-item">
+                <div class="label">Developer</div>
+                <div class="value">Marina Horizon Developments</div>
+              </div>
+              <div class="meta-item">
+                <div class="label">Main Contractor</div>
+                <div class="value">Gulf Structure Contracting</div>
+              </div>
+              <div class="meta-item">
+                <div class="label">Asset ID</div>
+                <div class="value">PJ-V27</div>
+              </div>
+              <div class="meta-item">
+                <div class="label">Completion Date</div>
+                <div class="value">12 Jan 2026</div>
+              </div>
+              <div class="meta-item">
+                <div class="label">Location</div>
+                <div class="value">Palm Jumeirah, Dubai</div>
+              </div>
+              <div class="meta-item">
+                <div class="label">Current Status</div>
+                <div class="value"><span class="status-pill success">Active Record</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="audit-box">
+            <div class="small-label">Verification</div>
+            <div class="audit-id">BR-2026-000127</div>
+            <div class="audit-note">
+              This property record includes a tamper-evident audit trail covering registration,
+              warranty issuance, and claim activity.
+            </div>
+            <div style="margin-top:16px;">
+              <span class="status-pill success">Verified</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Warranty Coverage</h2>
+              <p>Active and expiring warranty records for this property</p>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Warranty Type</th>
+                <th>Responsible Party</th>
+                <th>Coverage</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Structural</td>
+                <td>Gulf Structure Contracting</td>
+                <td>12 Jan 2026 → 12 Jan 2036</td>
+                <td><span class="status-pill success">Valid</span></td>
+              </tr>
+              <tr>
+                <td>Waterproofing</td>
+                <td>BlueSeal Waterproofing LLC</td>
+                <td>12 Jan 2026 → 12 Jan 2031</td>
+                <td><span class="status-pill success">Valid</span></td>
+              </tr>
+              <tr>
+                <td>HVAC</td>
+                <td>CoolFlow Services</td>
+                <td>12 Jan 2026 → 12 Jan 2028</td>
+                <td><span class="status-pill warning">Review</span></td>
+              </tr>
+              <tr>
+                <td>Electrical</td>
+                <td>Emirates Electrical Works</td>
+                <td>12 Jan 2026 → 12 Jan 2029</td>
+                <td><span class="status-pill success">Valid</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Documents</h2>
+              <p>Linked property and handover references</p>
+            </div>
+          </div>
+
+          <div class="docs-list">
+            <div class="doc-item">
+              <div>
+                <div class="doc-title">Completion Certificate</div>
+                <div class="doc-meta">Issued 12 Jan 2026</div>
+              </div>
+              <span class="status-pill neutral">Available</span>
+            </div>
+
+            <div class="doc-item">
+              <div>
+                <div class="doc-title">Handover Pack</div>
+                <div class="doc-meta">Owner delivery archive</div>
+              </div>
+              <span class="status-pill neutral">Available</span>
+            </div>
+
+            <div class="doc-item">
+              <div>
+                <div class="doc-title">Structural Warranty Certificate</div>
+                <div class="doc-meta">Reference BR-2026-000127</div>
+              </div>
+              <span class="status-pill success">Verified</span>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Claim Timeline</h2>
+              <p>Recent claim and inspection events for this property</p>
+            </div>
+          </div>
+
+          <ul class="timeline">
+            <li>
+              <div class="timeline-dot">1</div>
+              <div class="timeline-title">Warranty record created</div>
+              <div class="timeline-meta">12 Jan 2026 · Structural warranty registered under BR-2026-000127.</div>
+            </li>
+            <li>
+              <div class="timeline-dot">2</div>
+              <div class="timeline-title">Waterproofing issue filed</div>
+              <div class="timeline-meta">04 Mar 2026 · Owner submitted moisture ingress complaint for rear terrace area.</div>
+            </li>
+            <li>
+              <div class="timeline-dot">3</div>
+              <div class="timeline-title">Inspection scheduled</div>
+              <div class="timeline-meta">07 Mar 2026 · Site inspection booked with BlueSeal Waterproofing LLC.</div>
+            </li>
+            <li>
+              <div class="timeline-dot">4</div>
+              <div class="timeline-title">Claim under review</div>
+              <div class="timeline-meta">09 Mar 2026 · Supporting evidence and contractor response logged for review.</div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Operational Notes</h2>
+              <p>Recommended actions for this asset</p>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <tbody>
+              <tr>
+                <td>Next Priority</td>
+                <td>Resolve waterproofing claim CL-1042</td>
+              </tr>
+              <tr>
+                <td>Renewal Watch</td>
+                <td>HVAC coverage nearing review threshold</td>
+              </tr>
+              <tr>
+                <td>Owner Status</td>
+                <td>All handover references recorded</td>
+              </tr>
+              <tr>
+                <td>Audit Status</td>
+                <td><span class="status-pill success">Complete</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
