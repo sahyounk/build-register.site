@@ -23,3 +23,4 @@ This package gives you a clean static site structure for GitHub + Cloudflare Pag
 - Replace placeholder stats with real pilot metrics
 - Add `/privacy` and `/terms` pages
 - Build a real `/app` front end when the MVP is ready
+<a href="/verify.html">Verify a Record</a>
