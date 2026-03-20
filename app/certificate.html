@@ -26,6 +26,7 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 30px;
+      gap: 16px;
     }
 
     .title {
@@ -36,6 +37,7 @@
     .subtitle {
       color: #6d7890;
       font-size: 0.95rem;
+      margin-top: 4px;
     }
 
     .badge {
@@ -45,6 +47,7 @@
       color: #157347;
       font-weight: 600;
       font-size: 0.8rem;
+      height: fit-content;
     }
 
     .section {
@@ -87,6 +90,7 @@
       color: #6d7890;
       border-top: 1px solid #e5ebf3;
       padding-top: 14px;
+      line-height: 1.6;
     }
 
     .btn {
@@ -99,18 +103,37 @@
       text-decoration: none;
       font-weight: 600;
     }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        flex-direction: column;
+      }
+
+      body {
+        padding: 20px;
+      }
+
+      .certificate {
+        padding: 24px;
+      }
+    }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+  <script type="module" src="/app/certificate-loader.js"></script>
 </head>
 <body>
-
   <div class="certificate">
-
     <div class="header">
       <div>
         <div class="title">Warranty Certificate</div>
         <div class="subtitle">Build Register — Verified Record</div>
       </div>
-      <div class="badge">Verified</div>
+      <div class="badge" id="certBadge">Verified</div>
     </div>
 
     <div class="section">
@@ -118,11 +141,11 @@
       <div class="grid">
         <div class="item">
           <div class="label">Property</div>
-          <div class="value">Palm Jumeirah Villa 27</div>
+          <div class="value" id="certProperty">Palm Jumeirah Villa 27</div>
         </div>
         <div class="item">
           <div class="label">Location</div>
-          <div class="value">Palm Jumeirah, Dubai</div>
+          <div class="value" id="certLocation">Palm Jumeirah, Dubai</div>
         </div>
       </div>
     </div>
@@ -132,19 +155,19 @@
       <div class="grid">
         <div class="item">
           <div class="label">Type</div>
-          <div class="value">Structural</div>
+          <div class="value" id="certType">Loading...</div>
         </div>
         <div class="item">
           <div class="label">Coverage Period</div>
-          <div class="value">2026 – 2036</div>
+          <div class="value" id="certCoverage">Loading...</div>
         </div>
         <div class="item">
-          <div class="label">Contractor</div>
-          <div class="value">Gulf Structure Contracting</div>
+          <div class="label">Responsible Party</div>
+          <div class="value" id="certContractor">Loading...</div>
         </div>
         <div class="item">
           <div class="label">Certificate ID</div>
-          <div class="value">BR-2026-000127</div>
+          <div class="value" id="certId">Loading...</div>
         </div>
       </div>
     </div>
@@ -153,7 +176,15 @@
       <h3>Verification</h3>
       <div class="item">
         <div class="label">Status</div>
-        <div class="value">Active and verified in Build Register system</div>
+        <div class="value" id="certStatus">Loading on-chain verification...</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Audit Trail</h3>
+      <div class="item">
+        <div class="label">Record History</div>
+        <div class="value" id="certAudit">Loading...</div>
       </div>
     </div>
 
@@ -163,8 +194,6 @@
       This certificate represents a recorded warranty entry within the Build Register system.
       It provides a verifiable reference for coverage, responsibility, and issuance history.
     </div>
-
   </div>
-
 </body>
 </html>
