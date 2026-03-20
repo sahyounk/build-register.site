@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Register | Verify Warranty</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #f3f6fb;
+      --panel: #ffffff;
+      --text: #162033;
+      --muted: #667085;
+      --border: #dbe3ef;
+      --primary: #173b8f;
+      --primary-2: #2b68f6;
+      --success: #157347;
+      --warning: #b57600;
+      --danger: #b42318;
+      --shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--bg-soft);
+      color: var(--text);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .shell {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(43,104,246,0.12), transparent 26%),
+        linear-gradient(180deg, #0b1020 0%, #11182e 360px, #f3f6fb 360px, #f3f6fb 100%);
+    }
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0 10px;
+      color: white;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 280px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+
+    .brand-mark svg {
+      width: 28px;
+      height: 28px;
+      stroke: #8db4ff;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.72);
+      margin-top: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn,
+    .btn-secondary {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.2s ease;
+      white-space: nowrap;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+      color: white;
+      box-shadow: 0 10px 24px rgba(43, 104, 246, 0.25);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero {
+      color: white;
+      padding: 28px 0 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #dbe7ff;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.03;
+      margin: 0 0 14px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255,255,255,0.78);
+      max-width: 780px;
+      line-height: 1.65;
+      font-size: 1.04rem;
+    }
+
+    .search-card {
+      margin-top: -8px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 54px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0 16px;
+      font: inherit;
+      color: var(--text);
+      background: #fff;
+    }
+
+    .helper {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .result {
+      margin-top: 24px;
+      display: none;
+    }
+
+    .result.visible {
+      display: block;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+    }
+
+    .panel p.lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge.verified {
+      background: rgba(21,115,71,0.12);
+      color: var(--success);
+    }
+
+    .badge.warning {
+      background: rgba(181,118,0,0.12);
+      color: var(--warning);
+    }
+
+    .badge.error {
+      background: rgba(180,35,24,0.12);
+      color: var(--danger);
+    }
+
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .summary-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .summary-subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .item {
+      background: #f7f9fc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .value {
+      font-weight: 600;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .status-box {
+      display: grid;
+      gap: 14px;
+    }
+
+    .callout {
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      background: #f7fbff;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .message {
+      margin-top: 24px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      color: var(--muted);
+      display: none;
+    }
+
+    .message.visible {
+      display: block;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 900px) {
+      .search-row,
+      .result-grid,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <div class="container">
+      <header class="nav">
+        <div class="brand">
+          <div class="brand-mark">
+            <svg viewBox="0 0 28 28" aria-hidden="true">
+              <rect x="3" y="3" width="22" height="22" rx="6"></rect>
+              <path d="M9 18L13 14L16 17L20 11"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-title">Build Register</div>
+            <div class="brand-subtitle">Public Verification</div>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <a class="btn-secondary" href="/">Back to Site</a>
+          <a class="btn" href="/app">Open Dashboard</a>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="eyebrow">Independent record verification</div>
+        <h1>Verify a warranty record in seconds.</h1>
+        <p>
+          Enter a warranty ID to confirm whether a record exists, whether coverage is active,
+          and whether the audit trail is intact. This page is designed for owners, operators,
+          contractors, insurers, and any third party that needs trusted proof.
+        </p>
+      </section>
+
+      <section class="search-card">
+        <div class="search-row">
+          <input
+            id="verifyInput"
+            class="search-input"
+            type="text"
+            placeholder="Enter warranty ID, for example 1 or BR-000001"
+          />
+          <button id="verifyBtn" class="btn">Verify Record</button>
+        </div>
+        <div class="helper">
+          Demo tip: try <strong>1</strong> to load the current Nexus Testnet record.
+        </div>
+
+        <div id="notFoundMessage" class="message">
+          No matching warranty record was found. Check the ID and try again.
+        </div>
+
+        <div id="errorMessage" class="message">
+          Unable to load the verification record right now.
+        </div>
+
+        <div id="result" class="result">
+          <div class="result-grid">
+            <div class="panel">
+              <div class="summary">
+                <div>
+                  <div class="summary-title" id="summaryTitle">Warranty Record</div>
+                  <div class="summary-subtitle" id="summarySubtitle">Build Register verified reference</div>
+                </div>
+                <div class="badge verified" id="summaryBadge">Verified</div>
+              </div>
+
+              <div class="grid">
+                <div class="item">
+                  <div class="label">Certificate ID</div>
+                  <div class="value" id="certId">—</div>
+                </div>
+                <div class="item">
+                  <div class="label">Warranty Type</div>
+                  <div class="value" id="warrantyType">—</div>
+                </div>
+                <div class="item">
+                  <div class="label">Coverage Start</div>
+                  <div class="value" id="startDate">—</div>
+                </div>
+                <div class="item">
+                  <div class="label">Coverage End</div>
+                  <div class="value" id="endDate">—</div>
+                </div>
+                <div class="item">
+                  <div class="label">Vendor Reference</div>
+                  <div class="value" id="vendorRef">—</div>
+                </div>
+                <div class="item">
+                  <div class="label">Claim Status</div>
+                  <div class="value" id="claimStatus">—</div>
+                </div>
+                <div class="item">
+                  <div class="label">Created</div>
+                  <div class="value" id="createdAt">—</div>
+                </div>
+                <div class="item">
+                  <div class="label">Last Updated</div>
+                  <div class="value" id="updatedAt">—</div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <a class="btn" id="viewCertificateLink" href="/app/certificate.html?id=1">View Certificate</a>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2>Verification Outcome</h2>
+              <p class="lead">
+                This panel translates the on-chain record into plain business language.
+              </p>
+
+              <div class="status-box">
+                <div class="callout">
+                  <strong>Record Status</strong>
+                  <span id="statusLine">—</span>
+                </div>
+
+                <div class="callout">
+                  <strong>Integrity Check</strong>
+                  <span id="integrityLine">—</span>
+                </div>
+
+                <div class="callout">
+                  <strong>Document Fingerprint</strong>
+                  <span id="documentHash">—</span>
+                </div>
+
+                <div class="callout">
+                  <strong>Metadata Reference</strong>
+                  <span id="metadataUri">—</span>
+                </div>
+              </div>
+
+              <div class="footer-note">
+                Build Register uses an independently verifiable record so warranty issuance,
+                status changes, and supporting references cannot be silently rewritten.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script type="module">
+    import { getWarrantyById } from "/app/nexus.js";
+
+    const verifyInput = document.getElementById("verifyInput");
+    const verifyBtn = document.getElementById("verifyBtn");
+    const result = document.getElementById("result");
+    const notFoundMessage = document.getElementById("notFoundMessage");
+    const errorMessage = document.getElementById("errorMessage");
+
+    function parseWarrantyId(value) {
+      const trimmed = value.trim().toUpperCase();
+      if (!trimmed) return null;
+
+      if (/^\d+$/.test(trimmed)) {
+        return Number(trimmed);
+      }
+
+      const match = trimmed.match(/(\d+)$/);
+      if (match) return Number(match[1]);
+
+      return null;
+    }
+
+    function shortHash(value) {
+      if (!value || value === "—") return "—";
+      if (value.length <= 18) return value;
+      return `${value.slice(0, 8)}...${value.slice(-6)}`;
+    }
+
+    function resetMessages() {
+      result.classList.remove("visible");
+      notFoundMessage.classList.remove("visible");
+      errorMessage.classList.remove("visible");
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    async function verifyWarranty() {
+      resetMessages();
+
+      const warrantyId = parseWarrantyId(verifyInput.value);
+      if (!warrantyId) {
+        notFoundMessage.textContent = "Please enter a valid warranty ID.";
+        notFoundMessage.classList.add("visible");
+        return;
+      }
+
+      try {
+        const data = await getWarrantyById(warrantyId);
+
+        if (!data) {
+          notFoundMessage.textContent = "No matching warranty record was found. Check the ID and try again.";
+          notFoundMessage.classList.add("visible");
+          return;
+        }
+
+        const certDisplay = `BR-${String(data.id).padStart(6, "0")}`;
+
+        setText("summaryTitle", certDisplay);
+        setText("summarySubtitle", `${data.warrantyType} • Nexus Testnet record`);
+        setText("certId", certDisplay);
+        setText("warrantyType", data.warrantyType || "—");
+        setText("startDate", data.startDate || "—");
+        setText("endDate", data.endDate || "—");
+        setText("vendorRef", `Vendor ID ${data.vendorId}`);
+        setText("claimStatus", data.claimStatus || "—");
+        setText("createdAt", data.createdAt || "—");
+        setText("updatedAt", data.updatedAt || "—");
+
+        setText(
+          "statusLine",
+          data.isActive
+            ? "This warranty record exists on Nexus Testnet and is currently active."
+            : "This warranty record exists on Nexus Testnet but is currently inactive."
+        );
+
+        setText(
+          "integrityLine",
+          data.documentHash
+            ? "Integrity check passed. The registered document fingerprint is present."
+            : "Record found. No document fingerprint was available in this view."
+        );
+
+        setText("documentHash", shortHash(data.documentHash || "—"));
+        setText("metadataUri", data.metadataURI || "—");
+
+        const badge = document.getElementById("summaryBadge");
+        badge.textContent = data.isActive ? "Verified" : "Inactive";
+        badge.className = `badge ${data.isActive ? "verified" : "warning"}`;
+
+        const certLink = document.getElementById("viewCertificateLink");
+        certLink.href = `/app/certificate.html?id=${data.id}`;
+
+        result.classList.add("visible");
+      } catch (err) {
+        console.error(err);
+        errorMessage.textContent = "Unable to load the verification record right now.";
+        errorMessage.classList.add("visible");
+      }
+    }
+
+    verifyBtn.addEventListener("click", verifyWarranty);
+    verifyInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") verifyWarranty();
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (id) {
+      verifyInput.value = id;
+      verifyWarranty();
+    }
+  </script>
+</body>
+</html>
