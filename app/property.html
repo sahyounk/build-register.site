@@ -455,7 +455,6 @@
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
-  <script type="module" src="/app/property-loader.js"></script>
 </head>
 <body>
   <div class="page">
@@ -568,7 +567,7 @@
             <tbody>
               <tr>
                 <td id="warrantyTypePrimary">Loading...</td>
-                <td id="vendorPrimaryTable">Vendor ID loading...</td>
+                <td id="vendorPrimaryTable">Loading...</td>
                 <td id="coveragePrimary">Loading...</td>
                 <td><span class="status-pill success" id="propertyStatusTable">Loading...</span></td>
               </tr>
@@ -673,33 +672,106 @@
     </main>
   </div>
 
-  <script>
-    const mirror = () => {
-      const vendor = document.getElementById("vendorPrimary");
-      const vendorTable = document.getElementById("vendorPrimaryTable");
-      const certRef = document.getElementById("certificateRef");
-      const status = document.getElementById("propertyStatus");
-      const statusTable = document.getElementById("propertyStatusTable");
-      const verification = document.getElementById("verificationId");
-      const opsVerification = document.getElementById("opsVerificationId");
-      const warrantyType = document.getElementById("warrantyTypePrimary");
-      const opsWarrantyType = document.getElementById("opsWarrantyType");
+  <script type="module">
+    import { getWarrantyById } from "/app/nexus.js";
 
-      const observer = new MutationObserver(() => {
-        vendorTable.textContent = vendor.textContent;
-        certRef.textContent = verification.textContent;
-        statusTable.textContent = status.textContent;
-        statusTable.className = status.className;
-        opsVerification.textContent = verification.textContent;
-        opsWarrantyType.textContent = warrantyType.textContent;
-      });
+    function getWarrantyIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (id && !Number.isNaN(Number(id))) return Number(id);
+      return 1;
+    }
 
-      [vendor, verification, status, warrantyType].forEach((el) =>
-        observer.observe(el, { childList: true, subtree: true, characterData: true, attributes: true })
-      );
-    };
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
 
-    mirror();
+    function setBadge(id, text, mode = "success") {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = text;
+      el.className = `status-pill ${mode}`;
+    }
+
+    function shortHash(value) {
+      if (!value || value === "—") return "—";
+      if (value.length <= 20) return value;
+      return `${value.slice(0, 10)}...${value.slice(-8)}`;
+    }
+
+    async function loadProperty() {
+      try {
+        const warrantyId = getWarrantyIdFromUrl();
+        const data = await getWarrantyById(warrantyId);
+
+        if (!data) {
+          setText("propertyTitle", "Warranty record not found");
+          setText("propertySubtitle", "No matching on-chain warranty was found for this property view.");
+          setBadge("propertyStatus", "Not Found", "neutral");
+          setBadge("propertyStatusTable", "Not Found", "neutral");
+          setBadge("verificationBadge", "Not Found", "neutral");
+          return;
+        }
+
+        const certId = `BR-${String(data.id).padStart(6, "0")}`;
+        const activeText = data.isActive ? "Active Record" : "Inactive Record";
+        const activeMode = data.isActive ? "success" : "warning";
+
+        setText("propertyTitle", `Property Record • ${certId}`);
+        setText(
+          "propertySubtitle",
+          "Detailed record for handover, warranty coverage, claim activity, and verification status."
+        );
+
+        setText("vendorPrimary", `Vendor ID ${data.vendorId}`);
+        setText("assetId", `Asset ID ${data.assetId}`);
+        setText("completionDate", data.startDate);
+        setBadge("propertyStatus", activeText, activeMode);
+
+        setText("verificationId", certId);
+        setText("auditNote", `Created ${data.createdAt} • Updated ${data.updatedAt}`);
+        setBadge("verificationBadge", data.isActive ? "Verified" : "Inactive", activeMode);
+
+        setText("warrantyTypePrimary", data.warrantyType || "—");
+        setText("vendorPrimaryTable", `Vendor ID ${data.vendorId}`);
+        setText("coveragePrimary", `${data.startDate} → ${data.endDate}`);
+        setBadge("propertyStatusTable", activeText, activeMode);
+
+        setText("documentHash", shortHash(data.documentHash || "—"));
+        setText("metadataUri", data.metadataURI || "—");
+        setText("certificateRef", certId);
+
+        setText(
+          "timelineCreated",
+          `${data.createdAt} · Warranty record created and anchored to Nexus Testnet.`
+        );
+        setText(
+          "timelineClaim",
+          `${data.claimStatus} · Current claim state for this warranty record.`
+        );
+        setText(
+          "timelineUpdated",
+          `${data.updatedAt} · Latest on-chain update recorded for this warranty.`
+        );
+
+        setText("opsVerificationId", certId);
+        setText("opsWarrantyType", data.warrantyType || "—");
+        setText("claimState", data.claimStatus || "—");
+
+        const certLink = document.getElementById("certificateLink");
+        if (certLink) certLink.href = `/app/certificate.html?id=${data.id}`;
+      } catch (err) {
+        console.error("Property page load failed:", err);
+        setText("propertyTitle", "Unable to load property record");
+        setText("propertySubtitle", "The on-chain record could not be loaded at this time.");
+        setBadge("propertyStatus", "Error", "neutral");
+        setBadge("propertyStatusTable", "Error", "neutral");
+        setBadge("verificationBadge", "Error", "neutral");
+      }
+    }
+
+    loadProperty();
   </script>
 </body>
 </html>
