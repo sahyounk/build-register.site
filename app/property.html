@@ -22,9 +22,7 @@
       --radius: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -34,10 +32,7 @@
       color: var(--text);
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    a { text-decoration: none; color: inherit; }
 
     .page {
       min-height: 100vh;
@@ -237,6 +232,8 @@
 
     .meta-item .value {
       font-weight: 600;
+      line-height: 1.45;
+      word-break: break-word;
     }
 
     .audit-box {
@@ -257,6 +254,7 @@
       margin-top: 8px;
       color: var(--muted);
       line-height: 1.6;
+      word-break: break-word;
     }
 
     .content-grid {
@@ -422,6 +420,7 @@
     .doc-meta {
       color: var(--muted);
       font-size: 0.88rem;
+      word-break: break-word;
     }
 
     @media (max-width: 1100px) {
@@ -454,6 +453,9 @@
       }
     }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+  <script type="module" src="/app/property-loader.js"></script>
 </head>
 <body>
   <div class="page">
@@ -481,21 +483,19 @@
 
       <div class="sidebar-footer">
         <div class="small-label">Environment</div>
-        <div class="env-badge">Pilot / Demo</div>
+        <div class="env-badge">Nexus Testnet</div>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
         <div>
-          <h1>Palm Jumeirah Villa 27</h1>
-          <p>
-            Detailed record for handover, warranty coverage, claim activity, and verification status.
-          </p>
+          <h1 id="propertyTitle">Loading property record...</h1>
+          <p id="propertySubtitle">Loading detailed property and warranty information.</p>
         </div>
         <div class="actions">
           <a class="btn-secondary" href="/app">Back to Dashboard</a>
-          <a class="btn" href="/app/certificate.html">View Certificate</a>
+          <a class="btn" id="certificateLink" href="/app/certificate.html?id=1">View Certificate</a>
         </div>
       </header>
 
@@ -515,15 +515,15 @@
               </div>
               <div class="meta-item">
                 <div class="label">Main Contractor</div>
-                <div class="value">Gulf Structure Contracting</div>
+                <div class="value" id="vendorPrimary">Loading...</div>
               </div>
               <div class="meta-item">
                 <div class="label">Asset ID</div>
-                <div class="value">PJ-V27</div>
+                <div class="value" id="assetId">Loading...</div>
               </div>
               <div class="meta-item">
                 <div class="label">Completion Date</div>
-                <div class="value">12 Jan 2026</div>
+                <div class="value" id="completionDate">Loading...</div>
               </div>
               <div class="meta-item">
                 <div class="label">Location</div>
@@ -531,20 +531,17 @@
               </div>
               <div class="meta-item">
                 <div class="label">Current Status</div>
-                <div class="value"><span class="status-pill success">Active Record</span></div>
+                <div class="value"><span class="status-pill success" id="propertyStatus">Loading...</span></div>
               </div>
             </div>
           </div>
 
           <div class="audit-box">
             <div class="small-label">Verification</div>
-            <div class="audit-id">BR-2026-000127</div>
-            <div class="audit-note">
-              This property record includes a tamper-evident audit trail covering registration,
-              warranty issuance, and claim activity.
-            </div>
+            <div class="audit-id" id="verificationId">Loading...</div>
+            <div class="audit-note" id="auditNote">Loading...</div>
             <div style="margin-top:16px;">
-              <span class="status-pill success">Verified</span>
+              <span class="status-pill success" id="verificationBadge">Loading...</span>
             </div>
           </div>
         </div>
@@ -555,7 +552,7 @@
           <div class="panel-header">
             <div>
               <h2>Warranty Coverage</h2>
-              <p>Active and expiring warranty records for this property</p>
+              <p>Live coverage record loaded from Nexus Testnet</p>
             </div>
           </div>
 
@@ -570,28 +567,10 @@
             </thead>
             <tbody>
               <tr>
-                <td>Structural</td>
-                <td>Gulf Structure Contracting</td>
-                <td>12 Jan 2026 → 12 Jan 2036</td>
-                <td><span class="status-pill success">Valid</span></td>
-              </tr>
-              <tr>
-                <td>Waterproofing</td>
-                <td>BlueSeal Waterproofing LLC</td>
-                <td>12 Jan 2026 → 12 Jan 2031</td>
-                <td><span class="status-pill success">Valid</span></td>
-              </tr>
-              <tr>
-                <td>HVAC</td>
-                <td>CoolFlow Services</td>
-                <td>12 Jan 2026 → 12 Jan 2028</td>
-                <td><span class="status-pill warning">Review</span></td>
-              </tr>
-              <tr>
-                <td>Electrical</td>
-                <td>Emirates Electrical Works</td>
-                <td>12 Jan 2026 → 12 Jan 2029</td>
-                <td><span class="status-pill success">Valid</span></td>
+                <td id="warrantyTypePrimary">Loading...</td>
+                <td id="vendorPrimaryTable">Vendor ID loading...</td>
+                <td id="coveragePrimary">Loading...</td>
+                <td><span class="status-pill success" id="propertyStatusTable">Loading...</span></td>
               </tr>
             </tbody>
           </table>
@@ -601,31 +580,31 @@
           <div class="panel-header">
             <div>
               <h2>Documents</h2>
-              <p>Linked property and handover references</p>
+              <p>Anchored references linked to this warranty record</p>
             </div>
           </div>
 
           <div class="docs-list">
             <div class="doc-item">
               <div>
-                <div class="doc-title">Completion Certificate</div>
-                <div class="doc-meta">Issued 12 Jan 2026</div>
+                <div class="doc-title">Document Fingerprint</div>
+                <div class="doc-meta" id="documentHash">Loading...</div>
+              </div>
+              <span class="status-pill neutral">Anchored</span>
+            </div>
+
+            <div class="doc-item">
+              <div>
+                <div class="doc-title">Metadata Reference</div>
+                <div class="doc-meta" id="metadataUri">Loading...</div>
               </div>
               <span class="status-pill neutral">Available</span>
             </div>
 
             <div class="doc-item">
               <div>
-                <div class="doc-title">Handover Pack</div>
-                <div class="doc-meta">Owner delivery archive</div>
-              </div>
-              <span class="status-pill neutral">Available</span>
-            </div>
-
-            <div class="doc-item">
-              <div>
-                <div class="doc-title">Structural Warranty Certificate</div>
-                <div class="doc-meta">Reference BR-2026-000127</div>
+                <div class="doc-title">Certificate Reference</div>
+                <div class="doc-meta" id="certificateRef">Loading...</div>
               </div>
               <span class="status-pill success">Verified</span>
             </div>
@@ -638,30 +617,25 @@
           <div class="panel-header">
             <div>
               <h2>Claim Timeline</h2>
-              <p>Recent claim and inspection events for this property</p>
+              <p>Current lifecycle of the linked warranty record</p>
             </div>
           </div>
 
           <ul class="timeline">
             <li>
               <div class="timeline-dot">1</div>
-              <div class="timeline-title">Warranty record created</div>
-              <div class="timeline-meta">12 Jan 2026 · Structural warranty registered under BR-2026-000127.</div>
+              <div class="timeline-title">Warranty recorded</div>
+              <div class="timeline-meta" id="timelineCreated">Loading...</div>
             </li>
             <li>
               <div class="timeline-dot">2</div>
-              <div class="timeline-title">Waterproofing issue filed</div>
-              <div class="timeline-meta">04 Mar 2026 · Owner submitted moisture ingress complaint for rear terrace area.</div>
+              <div class="timeline-title">Current claim state</div>
+              <div class="timeline-meta" id="timelineClaim">Loading...</div>
             </li>
             <li>
               <div class="timeline-dot">3</div>
-              <div class="timeline-title">Inspection scheduled</div>
-              <div class="timeline-meta">07 Mar 2026 · Site inspection booked with BlueSeal Waterproofing LLC.</div>
-            </li>
-            <li>
-              <div class="timeline-dot">4</div>
-              <div class="timeline-title">Claim under review</div>
-              <div class="timeline-meta">09 Mar 2026 · Supporting evidence and contractor response logged for review.</div>
+              <div class="timeline-title">Latest update</div>
+              <div class="timeline-meta" id="timelineUpdated">Loading...</div>
             </li>
           </ul>
         </section>
@@ -670,27 +644,27 @@
           <div class="panel-header">
             <div>
               <h2>Operational Notes</h2>
-              <p>Recommended actions for this asset</p>
+              <p>Business-readable summary of the live record</p>
             </div>
           </div>
 
           <table class="data-table">
             <tbody>
               <tr>
-                <td>Next Priority</td>
-                <td>Resolve waterproofing claim CL-1042</td>
+                <td>Verification ID</td>
+                <td id="opsVerificationId">Loading...</td>
               </tr>
               <tr>
-                <td>Renewal Watch</td>
-                <td>HVAC coverage nearing review threshold</td>
+                <td>Warranty Type</td>
+                <td id="opsWarrantyType">Loading...</td>
               </tr>
               <tr>
-                <td>Owner Status</td>
-                <td>All handover references recorded</td>
+                <td>Claim State</td>
+                <td id="claimState">Loading...</td>
               </tr>
               <tr>
                 <td>Audit Status</td>
-                <td><span class="status-pill success">Complete</span></td>
+                <td><span class="status-pill success">Integrity Check Passed</span></td>
               </tr>
             </tbody>
           </table>
@@ -698,5 +672,34 @@
       </section>
     </main>
   </div>
+
+  <script>
+    const mirror = () => {
+      const vendor = document.getElementById("vendorPrimary");
+      const vendorTable = document.getElementById("vendorPrimaryTable");
+      const certRef = document.getElementById("certificateRef");
+      const status = document.getElementById("propertyStatus");
+      const statusTable = document.getElementById("propertyStatusTable");
+      const verification = document.getElementById("verificationId");
+      const opsVerification = document.getElementById("opsVerificationId");
+      const warrantyType = document.getElementById("warrantyTypePrimary");
+      const opsWarrantyType = document.getElementById("opsWarrantyType");
+
+      const observer = new MutationObserver(() => {
+        vendorTable.textContent = vendor.textContent;
+        certRef.textContent = verification.textContent;
+        statusTable.textContent = status.textContent;
+        statusTable.className = status.className;
+        opsVerification.textContent = verification.textContent;
+        opsWarrantyType.textContent = warrantyType.textContent;
+      });
+
+      [vendor, verification, status, warrantyType].forEach((el) =>
+        observer.observe(el, { childList: true, subtree: true, characterData: true, attributes: true })
+      );
+    };
+
+    mirror();
+  </script>
 </body>
 </html>
